@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "JobScan",
+  "version": "1.0",
+  "description": "Scan the job description and analyse",
+  "permissions": ["activeTab", "contextMenus", "sidePanel", "tabs","scripting","storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "JobScan Title"
+    // "default_popup": "index.html"
+  }
+  // "side_panel": {
+  //   "default_path": "index.html",
+  //   "openPanelOnActionClick": true
+  // }
+}
