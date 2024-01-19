@@ -1,6 +1,6 @@
 chrome.runtime.onInstalled.addListener(function () {
   chrome.contextMenus.create({
-    title: "Analyse the selected content",
+    title: "Prompt-Assisted Search",
     contexts: ["selection"],
     id: "jobScan",
   });

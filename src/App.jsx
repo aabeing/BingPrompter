@@ -23,21 +23,6 @@ const flags = {
 }
 
 let promptDataDefault = {
-  "Job Scan": `Following are details from my resume,
-  Profile:
-  • Experienced programmer with 3.7 years of coding and Azure cloud expertise
-  • Extensive experience in Azure Kubernetes Service, Azure functions and other Azure resources
-  • Full stack experience in MERN stack and expertise in server-less setup like firebase
-  Skills:
-  • Web: MongoDb,Nodejs,Express,Reactjs,MaterialUI, Redux, Mongoose
-  • Programming Skills: Python, Javascript, Powershell, SQL, KQL, C++, Java, Data Structures and Algorithms
-  • Database: MongoDB, MySQL, CosmosDB, Firestore
-  • Cloud: Kubernetes, Azure functions, Front Door, App Service,App Insights, Databricks, Firebase
-  • DevOps: Azure devops, Jenkins, ARM template, IAC
-  Output:
-  Share a job match percentage and Instead of suggestions tailor some sample additions to match more to the following job requirements.Add enough data to match on the same
-  ##Job description:  
-  `,
   "Repharse": `Repharse the following:`
 }
 
@@ -120,16 +105,33 @@ function App() {
       // console.log("Value retrieved for promptData" + JSON.stringify(result));
 
       const data = result.promptData
-      const retrievedData = JSON.parse(data)
+      let retrievedData
+      try {
+        retrievedData = JSON.parse(data)
+      }
+      catch {
+        console.log("Identified a non Json value")
+        retrievedData = {}
+      }
       // console.log("Value retrieved for promptData" + result.promptData + Object.keys(retrievedData));
       // console.log("From local" + result + result?.promptData)
       if (Object.keys(retrievedData).length != 0) {
         console.log("Setting retrievedData inside useeffect")
 
-        const promptDataFirstKey = Object.keys(retrievedData)[0]
-        setDropDownSelectText(promptDataFirstKey)
-        setPromptToUse(retrievedData[promptDataFirstKey])
         setPromptData(retrievedData)
+        // Checking for default key
+        chrome.storage.local.get(["promptDataDefaultKey"]).then((result) => {
+          const promptDataDefaultKey = result.promptDataDefaultKey
+          if (promptDataDefaultKey in retrievedData) {
+            setDropDownSelectText(promptDataDefaultKey)
+            setPromptToUse(retrievedData[promptDataDefaultKey])
+          }
+        }).catch((error) => {
+          console.error("Checking for default key failed, " + error);
+          const promptDataFirstKey = Object.keys(retrievedData)[0]
+          setDropDownSelectText(promptDataFirstKey)
+          setPromptToUse(retrievedData[promptDataFirstKey])
+        })
       }
       else {
         // chrome.storage.local.set({ promptData: JSON.stringify(promptDataDefault) }).then(() => {
@@ -163,7 +165,7 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    let url = "https://www.bing.com/search?q=" + encodeURIComponent(promptToUse + selectedText);
+    let url = "https://www.bing.com/search?q=" + encodeURIComponent(promptToUse + '\n' + selectedText);
     chrome.tabs.create({ url: url });
     // alert("Tab created");
 
@@ -172,6 +174,11 @@ function App() {
     setAddPageOpen(false)
     setPromptToUse(promptData[element]);
     setDropDownSelectText(element);
+
+    // Set default value by rearranging the json 
+    chrome.storage.local.set({ promptDataDefaultKey: element }).then(() => {
+      console.log("Value is set after default is set");
+    });
   }
   const handleDeleteClick = () => {
     let promptDataCopy = { ...promptData }
@@ -187,22 +194,29 @@ function App() {
   }
 
   const handleSaveClick = () => {
-    let promptDataCopy = { ...promptData }
-    promptDataCopy[promptName] = promptToUse
-    setPromptData(promptDataCopy)
-    chrome.storage.local.set({ promptData: JSON.stringify(promptDataCopy) }).then(() => {
-      console.log("Value is set after addition");
-      // alert("Saved")
-      // const promptDataFirstKey = Object.keys(retrievedData)[0]
-      setAddPageOpen(false)
-      setDropDownSelectText(promptName)
-      setPromptName('')
+    if (promptName) {
+      let promptDataCopy = { ...promptData }
+      promptDataCopy[promptName] = promptToUse
+      setPromptData(promptDataCopy)
+      chrome.storage.local.set({ promptData: JSON.stringify(promptDataCopy) }).then(() => {
+        console.log("Value is set after addition");
+        // alert("Saved")
+        // const promptDataFirstKey = Object.keys(retrievedData)[0]
+        setAddPageOpen(false)
+        setDropDownSelectText(promptName)
+        setPromptName('')
 
-      // setPromptToUse()
-    });
+        // setPromptToUse()
+      });
+    }
+    else {
+      alert("Prompt name is missing")
+    }
+
   }
   const handleAddClick = () => {
     setAddPageOpen(!addPageOpen)
+    setPromptName(dropDownSelectText)
   }
   const handlePromptNameChange = (event) => {
     const val = event.target.value
@@ -213,14 +227,7 @@ function App() {
   }
   return (
     <>
-      {/* <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div> */}
+      {/* APP BAR */}
       <Navbar>
         <Dropdown dropDownSelectText={dropDownSelectText}>
           {promptData && Object.keys(promptData).length > 0 ? (

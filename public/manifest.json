@@ -1,15 +1,27 @@
 {
   "manifest_version": 3,
-  "name": "JobScan",
-  "version": "1.0",
-  "description": "Scan the job description and analyse",
-  "permissions": ["activeTab", "contextMenus", "sidePanel", "tabs","scripting","storage"],
+  "name": "BingPrompter",
+  "version": "0.0.0.1",
+  "description": "One click vault for prompts",
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "sidePanel",
+    "tabs",
+    "scripting",
+    "storage"
+  ],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
     "default_title": "JobScan Title"
     // "default_popup": "index.html"
+  },
+  "icons": {
+    "16": "icon48.png",
+    "48": "icon48.png",
+    "128": "icon48.png"
   }
   // "side_panel": {
   //   "default_path": "index.html",
