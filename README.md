@@ -19,9 +19,11 @@ Enhances your browsing experience by providing prompt-assisted search capabiliti
 3. Choose the required prompt to add to the selected text or add a new custom prompt.
 4. Click on submit. This will open a new tab of Bing Chat with the selected content and prompt details, allowing you to use the input in the best way possible.
    
-![Prompt1](https://github.com/aabeing/BingPrompter/assets/49649994/b15c9e27-bca6-41a4-b3ab-01a0eea8ba78)
 
-![Prompt2](https://github.com/aabeing/BingPrompter/assets/49649994/9f2414f2-793a-4835-b41f-ce444b12415d)
+![Prompt1](https://github.com/aabeing/BingPrompter/assets/49649994/e37c9e9d-bfe7-4066-a92a-168c45a07cea)
+
+
+![Prompt2](https://github.com/aabeing/BingPrompter/assets/49649994/90ae3994-36f3-4e17-90d9-ad1d1239f475)
 
 
 ## Here are some potential use cases for the BingPrompter extension:
