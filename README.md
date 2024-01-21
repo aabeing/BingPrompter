@@ -10,7 +10,7 @@ Enhances your browsing experience by providing prompt-assisted search capabiliti
 ## Key Features:
 - **Integrated Bing Chat**: BingPrompter seamlessly integrates with Bing Chat, bringing the power of Bing's search capabilities to your fingertips.
 - **Local Storage of Custom Prompts**: BingPrompter allows you to save your custom search prompts locally. This means less time typing and more time getting the results you need.
-- **Side Panel UI**: The side panel UI opens when you select text on a webpage, allowing you to choose a prompt to add to the selected text or create a new custom prompt.
+- **Side Panel UI**: The Responsive side panel UI opens when you select text on a webpage, allowing you to choose a prompt to add to the selected text or create a new custom prompt.
 - **Enhanced Search Experience**: With your custom prompts stored and ready to use, your search queries become more precise, leading to more relevant search results.
 
 ## How to Use:
