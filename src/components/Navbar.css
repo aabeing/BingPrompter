@@ -6,27 +6,3 @@
     flex-direction: row;
     justify-content: space-between;
 }
-
-/* .navbar a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-} */
-
-/* .navbar {
-    background-color: #ddd;
-    color: black;
-} */
-
-
-
-
-/* @media (prefers-color-scheme: light) {
-    .navbar {
-        background-color: #204a87;
-        color: #FFFFFF;
-    } */
-/* } */
