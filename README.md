@@ -6,6 +6,7 @@ BingPrompter is a Microsoft Edge extension designed to enhance your browsing and
 
 Enhances your browsing experience by providing prompt-assisted search capabilities right within your browser. The use cases are endless and limited only by your imagination and creativity! Enjoy browsing with BingPrompter.
 
+
 ## Key Features:
 - **Integrated Bing Chat**: BingPrompter seamlessly integrates with Bing Chat, bringing the power of Bing's search capabilities to your fingertips.
 - **Local Storage of Custom Prompts**: BingPrompter allows you to save your custom search prompts locally. This means less time typing and more time getting the results you need.
@@ -17,11 +18,11 @@ Enhances your browsing experience by providing prompt-assisted search capabiliti
 2. Right click and select the "Prompt-Assisted Search" option. This will open the side panel UI of BingPrompter.
 3. Choose the required prompt to add to the selected text or add a new custom prompt.
 4. Click on submit. This will open a new tab of Bing Chat with the selected content and prompt details, allowing you to use the input in the best way possible.
+   
+![Prompt1](https://github.com/aabeing/BingPrompter/assets/49649994/b15c9e27-bca6-41a4-b3ab-01a0eea8ba78)
 
-## Open Source & Contributions:
-BingPrompter is an open-source project. We welcome and appreciate any contributions from the community. Whether you're a developer looking to fix bugs or add new features, or a user proposing improvements, your contributions are what make BingPrompter better for everyone.
+![Prompt2](https://github.com/aabeing/BingPrompter/assets/49649994/9f2414f2-793a-4835-b41f-ce444b12415d)
 
-Experience a more enjoyable and efficient browsing and searching experience with BingPrompter. Download today and join our open-source community!
 
 ## Here are some potential use cases for the BingPrompter extension:
 
@@ -41,3 +42,9 @@ Experience a more enjoyable and efficient browsing and searching experience with
 7. **Learning New Languages**:  BingPrompter can be a handy tool when learning a new language. Select a sentence in the foreign language and use a custom prompt like "translate this sentence" or "explain this grammar".
 
 Remember, BingPrompter is a chromium browser extension and works along with your browser.
+
+
+## Open Source & Contributions:
+BingPrompter is an open-source project. We welcome and appreciate any contributions from the community. Whether you're a developer looking to fix bugs or add new features, or a user proposing improvements, your contributions are what make BingPrompter better for everyone.
+
+Experience a more enjoyable and efficient browsing and searching experience with BingPrompter. Download today and join our open-source community!
