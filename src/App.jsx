@@ -11,7 +11,8 @@ const CONSTANT = {
   MAX_NEWTEXT_TEXTAREA_HEIGHT: 150,
   MAX_PROMPT_TEXTAREA_HEIGHT: 100,
   TEXTAREA_WIDTH: `100%`,
-  MIN_TEXTAREA_WIDTH: `200px`
+  MIN_TEXTAREA_WIDTH: `200px`,
+  Max_COUNTER_Length: 3999
 }
 
 const flags = {
@@ -33,6 +34,7 @@ function App() {
   const textAreaPromptTextRef = useRef(null)
   const [dropDownSelectText, setDropDownSelectText] = useState('Select Prompt')
   const [addPageOpen, setAddPageOpen] = useState(false)
+  const [counterLetter, setCounterLetter] = useState(0)
 
   useLayoutEffect(() => {
     console.log("useLayoutEffect")
@@ -68,12 +70,13 @@ function App() {
 
 
   useEffect(() => {
-    // console.log("useeffect")
+    console.log("useeffect")
 
     if (flags.firstRun == true) {
       chrome.storage.session.get(["selectedText"]).then((result) => {
         // console.log("Value retrieved from storage 1" + result.selectedText);
         setSelectedText(result.selectedText)
+        // setCounterLetter(result.selectedText.length + promptData.length)
       });
       flags.firstRun = false;
     }
@@ -83,6 +86,7 @@ function App() {
       //   `Storage key "${key}" in namespace "${namespace}" changed. flags.firstRun : ${flags.firstRun}`,
       //   `Old value was "${oldValue}", new value is "${newValue}".`
       // );
+      console.log("onchangest")
       setSelectedText(newValue)
     }
     chrome.storage.session.onChanged.addListener(handleStorageChange);
@@ -132,17 +136,111 @@ function App() {
       // console.log("Listener Removed")
     };
   }, []);
-  const handleChangeOnNewText = (event) => {
-    setSelectedText(event.target.value);
-  };
-  const handleChangeOnPrompt = (event) => {
-    setPromptToUse(event.target.value);
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  // const handleChangeOnNewText = (event) => {
+  //   setSelectedText(event.target.value);
+  // };
+  // const handleChangeOnPrompt = (event) => {
+  //   setPromptToUse(event.target.value);
+  // };
+  const sendContentToTab = (promptedData) => {
+    // console.log("Inside new function")
+    // Retreive the textarea element
+    const eleSearchBox = document.querySelector("#b_sydConvCont > cib-serp").shadowRoot.querySelector("#cib-action-bar-main").shadowRoot.querySelector("div > div.main-container > div > div.input-row > cib-text-input").shadowRoot.querySelector("#searchbox");
+    eleSearchBox.focus();
+    eleSearchBox.value = promptedData;
 
-    let url = "https://www.bing.com/search?q=" + encodeURIComponent(promptToUse + '\n' + selectedText);
-    chrome.tabs.create({ url: url });
+    // Simulate a letter typing
+    const char = '.'; // Character to type
+    let event = new KeyboardEvent("keydown", { // create a keydown event
+      key: char, // the key property is the character
+      code: "Key" + char.toUpperCase(), // the code property is the key code
+      keyCode: char.charCodeAt(0), // the keyCode property is the ASCII value
+      which: char.charCodeAt(0), // the which property is the same as keyCode
+      shiftKey: false, // no modifier keys
+      ctrlKey: false,
+      metaKey: false
+    });
+    eleSearchBox.dispatchEvent(event); // dispatch the keydown event
+    event = new KeyboardEvent("beforeinput", { // create a beforeinput event
+      key: char,
+      code: "Key" + char.toUpperCase(),
+      keyCode: char.charCodeAt(0),
+      which: char.charCodeAt(0),
+      shiftKey: false,
+      ctrlKey: false,
+      metaKey: false
+    });
+    eleSearchBox.dispatchEvent(event); // dispatch the beforeinput event
+    eleSearchBox.value += char; // append the character to the eleSearchBox value
+    event = new KeyboardEvent("input", { // create an input event
+      key: char,
+      code: "Key" + char.toUpperCase(),
+      keyCode: char.charCodeAt(0),
+      which: char.charCodeAt(0),
+      shiftKey: false,
+      ctrlKey: false,
+      metaKey: false
+    });
+    eleSearchBox.dispatchEvent(event); // dispatch the input event
+    event = new KeyboardEvent("keyup", { // create a keyup event
+      key: char,
+      code: "Key" + char.toUpperCase(),
+      keyCode: char.charCodeAt(0),
+      which: char.charCodeAt(0),
+      shiftKey: false,
+      ctrlKey: false,
+      metaKey: false
+    });
+    eleSearchBox.dispatchEvent(event); // dispatch the keyup event    
+    let eleSendBtn = document.querySelector("#b_sydConvCont > cib-serp").shadowRoot.querySelector("#cib-action-bar-main").shadowRoot.querySelector("div > div.main-container > div > div.bottom-controls > div.bottom-right-controls > div.control.submit > button")
+    setTimeout(() => {
+      eleSendBtn.click()
+    }, 1000)
+
+    // return "";
+
+
+  }
+  function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const promptedData = promptToUse + '\n' + selectedText
+    // let url = "https://www.bing.com/search?q=" + encodeURIComponent(promptedData);
+    let url = "https://www.bing.com/chat"
+    let createdTab = await chrome.tabs.create({ url: url });
+    // console.log(document.readyState)
+    await delay(1000)
+    let injectionResults = await chrome.scripting.executeScript({
+      target: { tabId: createdTab.id },
+      func: sendContentToTab,
+      args: [promptedData]
+    });
+    // Inject script only if loaded 
+    // if (document.readyState === 'ready' || document.readyState === 'complete') {
+    //   console.log("page state:" + document.readyState)
+    //   injectionResults = await chrome.scripting.executeScript({
+    //     target: { tabId: createdTab.id },
+    //     func: sendContentToTab,
+    //     args: [promptedData]
+    //   });
+    // } else {
+    //   console.log("listener added:" + document.readyState)
+    //   document.onreadystatechange = async function () {
+    //     if (document.readyState == "complete") {
+    //       injectionResults = await chrome.scripting.executeScript({
+    //         target: { tabId: createdTab.id },
+    //         func: sendContentToTab,
+    //         args: [promptedData]
+    //       });
+    //     }
+    //   }
+    // }
+
+    // console.log("injected a function");
+    let { result } = injectionResults[0];
+    console.log("Out: " + result);
     // alert("Tab created");
 
   };
@@ -195,8 +293,27 @@ function App() {
     if (typeof val === 'string' && val.length < 30) {
       setPromptName(val)
     }
-
   }
+  const handlePromptToUse = (event) => {
+    const val = event.target.value
+    setPromptToUse(val)
+    setCounterLetter(selectedText.length + val.length)
+  }
+  const handleSelectedText = (event) => {
+    const val = event.target.value
+    setSelectedText(val)
+    setCounterLetter(promptToUse.length + val.length)
+  }
+  // const funcSetSelectedText = (value) => {
+  //   console.log(value + " ## " + promptToUse)
+  //   setCounterLetter(value.length + promptToUse.length)
+  //   setSelectedText(value)
+  // }
+
+  // const funcSetPromptToUse = (value) => {
+  //   setCounterLetter(value.length + selectedText.length)
+  //   setPromptToUse(value)
+  // }
   return (
     <>
       {/* APP BAR */}
@@ -250,7 +367,8 @@ function App() {
           <h3 >Prompt:</h3>
           <textarea
             value={promptToUse} ref={textAreaPromptTextRef}
-            onChange={(event) => setPromptToUse(event.target.value)}
+            onChange={handlePromptToUse}
+            // {(event) => setPromptToUse(event.target.value)}
             style={{
               minHeight: CONSTANT.MIN_TEXTAREA_HEIGHT,
               resize: "none",
@@ -261,7 +379,8 @@ function App() {
           <h3>Selected Text:</h3>
           <textarea
             value={selectedText} ref={textAreaNewTextRef}
-            onChange={(event) => setSelectedText(event.target.value)}
+            onChange={handleSelectedText}
+            // {(event) => setSelectedText(event.target.value)}
             style={{
               minHeight: CONSTANT.MIN_TEXTAREA_HEIGHT,
               resize: "none",
@@ -269,6 +388,8 @@ function App() {
               minWidth: CONSTANT.MIN_TEXTAREA_WIDTH
             }}
           />
+          <h4>{counterLetter}/{CONSTANT.Max_COUNTER_Length}</h4>
+
           <div style={{ textAlign: "center", width: "100%" }}>
             <button type="submit" style={{
               width: "30%",

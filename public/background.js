@@ -14,12 +14,14 @@ function copySelectedText() {
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId === "prompter") {
     //Just for sidepanel
-    chrome.sidePanel.setOptions({
-      tabId: tab.id,
-      path: "index.html",
-      enabled: true,
-    });
-    await chrome.sidePanel.open({ tabId: tab.id });
+    // chrome.sidePanel.setOptions({
+    //   tabId: tab.id,
+    //   path: "index.html",
+    //   enabled: true,
+    // });
+    // await chrome.sidePanel.open({ tabId: tab.id });
+    await chrome.sidePanel.open({ windowId: tab.windowId });
+
     // Get the selected content 
     let injectionResults = await chrome.scripting.executeScript({
       target: { tabId: tab.id },
@@ -33,3 +35,28 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     console.log("Onclick: Completed");
   }
 });
+
+// const GOOGLE_ORIGIN = "https://www.bing.com";
+// chrome.tabs.onUpdated.addListener(async (tabId, info, tab) => {
+//   if (!tab.url) return;
+//   const url = new URL(tab.url);
+//   // Enables the side panel on bing.com
+//   if (url.origin === GOOGLE_ORIGIN) {
+//     await chrome.sidePanel.setOptions(
+//       {
+//         tabId,
+//         path: 'index.html',
+//         enabled: true
+//       }   
+//     );
+//   } 
+//   // else {
+//   //   // Disables the side panel on all other sites
+//   //   await chrome.sidePanel.setOptions(
+//   //     {
+//   //       tabId,
+//   //       enabled: false
+//   //     }
+//   //   );
+//   // }
+// });
