@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "BingPrompter",
-  "version": "0.0.0.1",
+  "version": "0.0.0.2",
   "description": "One click vault for prompts",
   "permissions": [
     "activeTab",
@@ -12,9 +12,8 @@
     "storage"
   ],
   "host_permissions": [
-    "https://*/*",
-    "https://bing.com/chat",
-    "https://bing.com/*"
+    // "https://*/*",
+    "https://www.bing.com/*"
   ],
   "side_panel": {
     "default_path": "index.html"

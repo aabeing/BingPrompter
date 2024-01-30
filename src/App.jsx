@@ -70,7 +70,7 @@ function App() {
 
 
   useEffect(() => {
-    console.log("useeffect")
+    // console.log("useeffect")
 
     if (flags.firstRun == true) {
       chrome.storage.session.get(["selectedText"]).then((result) => {
@@ -148,6 +148,7 @@ function App() {
     const eleSearchBox = document.querySelector("#b_sydConvCont > cib-serp").shadowRoot.querySelector("#cib-action-bar-main").shadowRoot.querySelector("div > div.main-container > div > div.input-row > cib-text-input").shadowRoot.querySelector("#searchbox");
     eleSearchBox.focus();
     eleSearchBox.value = promptedData;
+    // console.log("sendContentToTab: " + eleSearchBox.value)
 
     // Simulate a letter typing
     const char = '.'; // Character to type
@@ -198,9 +199,91 @@ function App() {
     }, 1000)
 
     // return "";
-
-
   }
+  // const sendContentToTab2 = async (promptedData) => {
+  //   const sendContentToTab = (promptedData) => {
+  //     // console.log("Inside new function")
+  //     // Retreive the textarea element
+  //     const eleSearchBox = document.querySelector("#b_sydConvCont > cib-serp")?.shadowRoot.querySelector("#cib-action-bar-main")?.shadowRoot.querySelector("div > div.main-container > div > div.input-row > cib-text-input")?.shadowRoot.querySelector("#searchbox");
+  //     if (eleSearchBox) {
+  //       eleSearchBox.focus();
+  //       eleSearchBox.value = promptedData;
+  //       console.log("sendContentToTab: " + eleSearchBox.value)
+
+  //       // Simulate a letter typing
+  //       const char = '.'; // Character to type
+  //       let event = new KeyboardEvent("keydown", { // create a keydown event
+  //         key: char, // the key property is the character
+  //         code: "Key" + char.toUpperCase(), // the code property is the key code
+  //         keyCode: char.charCodeAt(0), // the keyCode property is the ASCII value
+  //         which: char.charCodeAt(0), // the which property is the same as keyCode
+  //         shiftKey: false, // no modifier keys
+  //         ctrlKey: false,
+  //         metaKey: false
+  //       });
+  //       eleSearchBox.dispatchEvent(event); // dispatch the keydown event
+  //       event = new KeyboardEvent("beforeinput", { // create a beforeinput event
+  //         key: char,
+  //         code: "Key" + char.toUpperCase(),
+  //         keyCode: char.charCodeAt(0),
+  //         which: char.charCodeAt(0),
+  //         shiftKey: false,
+  //         ctrlKey: false,
+  //         metaKey: false
+  //       });
+  //       eleSearchBox.dispatchEvent(event); // dispatch the beforeinput event
+  //       eleSearchBox.value += char; // append the character to the eleSearchBox value
+  //       event = new KeyboardEvent("input", { // create an input event
+  //         key: char,
+  //         code: "Key" + char.toUpperCase(),
+  //         keyCode: char.charCodeAt(0),
+  //         which: char.charCodeAt(0),
+  //         shiftKey: false,
+  //         ctrlKey: false,
+  //         metaKey: false
+  //       });
+  //       eleSearchBox.dispatchEvent(event); // dispatch the input event
+  //       event = new KeyboardEvent("keyup", { // create a keyup event
+  //         key: char,
+  //         code: "Key" + char.toUpperCase(),
+  //         keyCode: char.charCodeAt(0),
+  //         which: char.charCodeAt(0),
+  //         shiftKey: false,
+  //         ctrlKey: false,
+  //         metaKey: false
+  //       });
+  //       eleSearchBox.dispatchEvent(event); // dispatch the keyup event    
+  //       let eleSendBtn = document.querySelector("#b_sydConvCont > cib-serp").shadowRoot.querySelector("#cib-action-bar-main").shadowRoot.querySelector("div > div.main-container > div > div.bottom-controls > div.bottom-right-controls > div.control.submit > button")
+  //       setTimeout(() => {
+  //         eleSendBtn.click()
+  //       }, 1000)
+  //     }
+  //     // return "";
+  //   }
+  //   function delay(ms) {
+  //     return new Promise(resolve => setTimeout(resolve, ms));
+  //   }
+  //   let i = 0
+  //   document.addEventListener('DOMContentLoaded', function () { console.log("####DOM loaded") })
+  //   document.addEventListener('load', function () { console.log("####load loaded") })
+  //   while (i < 10) {
+  //     i += 1
+  //     console.log("Inside new function" + i)
+  //     const eleSearchBox = document.querySelector("#b_sydConvCont > cib-serp")?.shadowRoot.querySelector("#cib-action-bar-main")?.shadowRoot.querySelector("div > div.main-container > div > div.input-row > cib-text-input")?.shadowRoot.querySelector("#searchbox");
+  //     console.log(typeof (eleSearchBox))
+  //     console.log(eleSearchBox)
+  //     if (eleSearchBox) {
+  //       console.log("Inside if" + eleSearchBox)
+  //       sendContentToTab(promptedData)
+  //       break
+  //     }
+  //     else {
+  //       console.log("Inside else" + eleSearchBox)
+  //       sendContentToTab(promptedData)
+  //     }
+  //     await delay(1000)
+  //   }
+  // }
   function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -211,7 +294,7 @@ function App() {
     let url = "https://www.bing.com/chat"
     let createdTab = await chrome.tabs.create({ url: url });
     // console.log(document.readyState)
-    await delay(1000)
+    await delay(2500)
     let injectionResults = await chrome.scripting.executeScript({
       target: { tabId: createdTab.id },
       func: sendContentToTab,
