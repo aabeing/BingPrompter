@@ -297,12 +297,12 @@ function App() {
   const handlePromptToUse = (event) => {
     const val = event.target.value
     setPromptToUse(val)
-    setCounterLetter(selectedText.length + val.length)
+    // setCounterLetter(selectedText.length + val.length)
   }
   const handleSelectedText = (event) => {
     const val = event.target.value
     setSelectedText(val)
-    setCounterLetter(promptToUse.length + val.length)
+    // setCounterLetter(promptToUse.length + val.length)
   }
   // const funcSetSelectedText = (value) => {
   //   console.log(value + " ## " + promptToUse)
@@ -388,7 +388,7 @@ function App() {
               minWidth: CONSTANT.MIN_TEXTAREA_WIDTH
             }}
           />
-          <h4>{counterLetter}/{CONSTANT.Max_COUNTER_Length}</h4>
+          <h4>{promptToUse.length + selectedText.length}/{CONSTANT.Max_COUNTER_Length}</h4>
 
           <div style={{ textAlign: "center", width: "100%" }}>
             <button type="submit" style={{
