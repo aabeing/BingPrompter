@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "BingPrompter",
-  "version": "0.0.0.1",
+  "version": "0.0.0.2",
   "description": "One click vault for prompts",
   "permissions": [
     "activeTab",
@@ -11,20 +11,23 @@
     "scripting",
     "storage"
   ],
+  "host_permissions": [
+    // "https://*/*",
+    "https://www.bing.com/*"
+  ],
+  "side_panel": {
+    "default_path": "index.html"
+  },
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "JobScan Title"
-    // "default_popup": "index.html"
+    "default_title": "BingPrompter",
+    "default_popup": "popup.html"
   },
   "icons": {
     "16": "icon48.png",
     "48": "icon48.png",
     "128": "icon48.png"
   }
-  // "side_panel": {
-  //   "default_path": "index.html",
-  //   "openPanelOnActionClick": true
-  // }
 }

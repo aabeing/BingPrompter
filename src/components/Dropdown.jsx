@@ -1,4 +1,3 @@
-import React from 'react';
 import './Dropdown.css';
 
 const Dropdown = (props) => {
@@ -6,7 +5,6 @@ const Dropdown = (props) => {
         <div className="dropdown">
             <button className="dropbtn">{props.dropDownSelectText}</button>
             <div className="dropdown-content">
-
                 {props.children}
             </div>
         </div>

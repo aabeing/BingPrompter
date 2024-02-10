@@ -6,7 +6,6 @@ _One click vault for prompts_
 
 [Add to Chrome] - Yet to be released
 
-
 BingPrompter is a Microsoft Edge extension designed to enhance your browsing and searching experience. This extension integrates with Bing Chat and features a side panel UI that stores all your custom prompts locally, boosting your productivity and making your searches more efficient.
 
 Enhances your browsing experience by providing prompt-assisted search capabilities right within your browser. The use cases are endless and limited only by your imagination and creativity! Enjoy browsing with BingPrompter.
