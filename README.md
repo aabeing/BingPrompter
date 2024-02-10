@@ -1,4 +1,4 @@
-# BingPrompter
+# BingPrompter!
 
 _One click vault for prompts_
 
